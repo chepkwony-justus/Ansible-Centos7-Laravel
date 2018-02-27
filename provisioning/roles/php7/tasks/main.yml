@@ -18,3 +18,7 @@
     - php-pdo
     - php-xml
     - php-zip
+- name: deploy php.ini
+  template:
+    src: php.ini
+    dest: /etc/php.ini
