@@ -3,5 +3,7 @@
   become: true
   user: vagrant
   tasks:
-     - name: install packages zsh
-       ping:
+    - name: install packages zsh
+      ping:
+  roles:
+    - git
