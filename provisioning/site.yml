@@ -7,3 +7,4 @@
       ping:
   roles:
     - git
+    - php7
