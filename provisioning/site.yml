@@ -4,6 +4,7 @@
   user: vagrant
   vars:
     srcpath: /usr/local/src
+    homedir: /home/vagrant
   tasks:
     - name: install packages zsh
       ping:

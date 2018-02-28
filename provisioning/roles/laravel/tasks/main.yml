@@ -6,3 +6,27 @@
 
 - name: disable SELinux
   selinux: state=disabled
+
+- name: check project-myapp
+  stat:
+    path: "{{ homedir }}/apps/myapp"
+  register: check_myapp
+
+- name: create-laravel myapp
+  composer:
+    command: create-project
+    arguments: laravel/laravel myapp 5.5.*
+    working_dir: "{{ homedir }}/apps"
+    prefer_dist: yes
+  when: not check_myapp.stat.exists
+
+- name: composer-self update
+  composer:
+    command: self-update
+    working_dir: "{{ homedir }}/apps/myapp"
+
+- name: composer-install myapp
+  composer:
+    command: install
+    optimize-autoloader: yes
+    working_dir: "{{ homedir }}/apps/myapp"
