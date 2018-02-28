@@ -2,9 +2,12 @@
 - hosts: vagrants
   become: true
   user: vagrant
+  vars:
+    srcpath: /usr/local/src
   tasks:
     - name: install packages zsh
       ping:
   roles:
     - git
     - php7
+    - apache2_4
