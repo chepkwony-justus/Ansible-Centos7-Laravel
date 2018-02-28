@@ -18,4 +18,23 @@
   template: src=httpd.conf dest=/usr/local/apache2/conf/httpd.conf
   when: usr_local_apache_conf.stat.exists
 
+#####
+# laravel.conf のデプロイ
+#####
+- name: check existance /etc/httpd/conf.d
+  stat: path=/etc/httpd/conf.d
+  register: etc_httpd_conf_d
+
+- name: deploy /etc/httpd/conf.d/laravel.conf
+  template: src=laravel.conf dest=/etc/httpd/conf.d/laravel.conf
+  when: etc_httpd_conf_d.stat.exists
+
+- name: check existance /usr/local/apache2/conf.d
+  stat: path=/usr/local/apache2/conf.d
+  register: usr_local_httpd_conf_d
+
+- name: deploy config
+  template: src=laravel.conf dest=/usr/local/apache2/conf.d/laravel.conf
+  when: usr_local_httpd_conf_d.stat.exists
+
 
