@@ -5,11 +5,14 @@
   vars:
     srcpath: /usr/local/src
     homedir: /home/vagrant
+    tmp: /tmp
+    mysql_root_passwd: RootPass4Local$
   tasks:
     - name: install packages zsh
       ping:
   roles:
-    - git
-    - php7
-    - apache2_4
-    - laravel
+    - { role: git, tags: ["local"] }
+    - { role: php7, tags: ["local"] }
+    - { role: apache2_4, tags: ["local"] }
+    - { role: laravel, tags: ["local"] }
+    - { role: mysql57, tags: ["local"] }

@@ -79,6 +79,7 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "provisioning/site.yml"
     ansible.inventory_path = "provisioning/hosts"
     ansible.limit = 'all'
+    ansible.tags = 'local'
   end
 
 end
