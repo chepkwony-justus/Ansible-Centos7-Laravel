@@ -10,6 +10,22 @@
   template: src=httpd.conf dest=/etc/httpd/conf/httpd.conf
   when: etc_httpd_conf.stat.exists
 
+- name: rewirte /etc/httpd/conf/httpd.conf
+  lineinfile:
+    dest=/etc/httpd/conf/httpd.conf
+    state=present
+    backrefs=yes
+    regexp={{ item.regexp }}
+    line={{ item.line }}
+  with_items:
+    - regexp: 'User apache'
+      line: 'User vagrant'
+    - regexp: 'Group apache'
+      line: 'Group vagrant'
+  when:
+    - env == "local"
+    - etc_httpd_conf.stat.exists
+
 - name: check existance /usr/local/apache2/conf
   stat: path=/usr/local/apache2/conf
   register: usr_local_apache_conf
@@ -30,7 +46,9 @@
       line: 'User vagrant'
     - regexp: 'Group apache'
       line: 'Group vagrant'
-  when: env == "local"
+  when:
+    - env == "local"
+    - usr_local_apache_conf.stat.exists
 
 #####
 # laravel.conf のデプロイ

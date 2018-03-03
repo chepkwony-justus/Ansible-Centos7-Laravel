@@ -13,9 +13,6 @@
 
 - include: config.yml
 
-- name: deploy config
-  template: src=httpd.conf dest=/usr/local/apache2/conf/httpd.conf
-
 - name: restart apache
   service: name=httpd state=restarted
 
