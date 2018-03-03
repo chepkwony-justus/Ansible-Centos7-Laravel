@@ -29,6 +29,7 @@
   composer:
     command: install
     optimize-autoloader: yes
+    no_dev: false
     working_dir: "{{ homedir }}/apps/myapp"
 
 - name: rewrite .env
@@ -45,4 +46,18 @@
       line: 'DB_USERNAME=root'
     - regexp: 'DB_PASSWORD=secret'
       line: 'DB_PASSWORD={{ mysql_root_passwd }}'
+
+- name: create .env.testing
+  command: 'cp -p {{ homedir }}/apps/myapp/.env {{ homedir }}/apps/myapp/.env.testing'
+
+- name: rewrite .env.testing
+  lineinfile:
+    dest={{ homedir }}/apps/myapp/.env
+    state=present
+    backrefs=yes
+    regexp={{ item.regexp }}
+    line={{ item.line }}
+  with_items:
+    - regexp: 'DB_DATABASE=localdb'
+      line: 'DB_DATABASE=testdb'
 

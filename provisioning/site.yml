@@ -17,6 +17,7 @@
     - apache2_4
     - laravel
     - mysql57
+    - npm
 
 - hosts: ec2-dev
   become: true

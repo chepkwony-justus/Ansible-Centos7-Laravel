@@ -49,3 +49,41 @@
     mysql -u root -p'Do_You_Love_MySQL5.7?' --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '{{ mysql_root_passwd }}';" # 任意のパスワード
   when: root_login_result.rc != 0
 
+
+- name: create root my.cnf
+  become: yes
+  template:
+    src=my.cnf
+    dest=/root/my.cnf
+    owner=root
+    group=root
+    mode=0600
+
+- name: rewirte /root/my.cnf
+  become: yes
+  lineinfile:
+    dest=/root/my.cnf
+    state=present
+    backrefs=yes
+    regexp={{ item.regexp }}
+    line={{ item.line }}
+
+  with_items:
+    - regexp: 'password=password'
+      line: 'password={{ mysql_root_passwd }}'
+
+- name: create databases
+  mysql_db:
+    db: "{{ item.db_name }}"
+    login_host: localhost
+    login_user: root
+    login_password: "{{ mysql_root_passwd }}"
+    state: present
+    encoding: utf8
+
+  with_items:
+    - db_name: localdb
+    - db_name: testdb
+
+  ignore_errors: True
+

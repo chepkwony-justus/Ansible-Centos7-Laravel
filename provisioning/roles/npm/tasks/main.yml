@@ -1,0 +1,21 @@
+---
+- name: setup nodejs6.x
+  become: yes
+  shell: curl -sL https://rpm.nodesource.com/setup_6.x | sudo -E bash -
+- name: installing latest version of node.js
+  become: yes
+  yum:
+    name: nodejs
+    state: latest
+
+- name: Install "executor" node.js package.
+  npm:
+    name: '@lassehaslev/executor'
+    global: true
+
+- name: put "tdd.sh"
+  template: 'src=tdd.sh dest={{ homedir }}/apps/myapp/tdd.sh'
+
+- name: chmod "tdd.sh"
+  command: 'chmod 755 {{ homedir }}/apps/myapp/tdd.sh'
+
