@@ -1,0 +1,38 @@
+#!/bin/sh
+
+function usage {
+    cat <<EOF
+    $(basename ${0}) is a tool for phpunit or phpstan (or all) watching executor
+
+Usage:
+    $(basename ${0}) phpunit|phpstan|all
+
+Options:
+    --help, -h        print this
+EOF
+}
+
+case ${1} in
+
+    phpunit)
+        executor './vendor/bin/phpunit' --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
+    ;;
+
+    phpstan)
+        executor './vendor/bin/phpstan analyze -c phpstan.neon -l 4 --no-progress app routes' --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
+    ;;
+
+    all)
+        executor './vendor/bin/phpunit && ./vendor/bin/phpstan analyze -c phpstan.neon -l 4 --no-progress app routes' --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
+    ;;
+
+    help|--help|-h)
+        usage
+    ;;
+
+    *)
+        echo "[ERROR] Invalid subcommand '${1}'"
+        usage
+        exit 1
+    ;;
+esac

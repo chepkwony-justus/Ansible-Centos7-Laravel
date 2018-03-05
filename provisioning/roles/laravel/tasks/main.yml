@@ -32,6 +32,17 @@
     no_dev: false
     working_dir: "{{ homedir }}/apps/myapp"
 
+- name: composer require phpstan-laravel
+  become: no
+  composer:
+    command: require
+    arguments: Weebly/phpstan-laravel
+    no_dev: false
+    working_dir: "{{ homedir }}/apps/myapp"
+
+- name: put phpstan.conf
+  template: 'src=phpstan.conf dest={{ homedir }}/apps/myapp/phpstan.conf'
+
 - name: rewrite .env
   lineinfile:
     dest={{ homedir }}/apps/myapp/.env

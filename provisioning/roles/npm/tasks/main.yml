@@ -13,9 +13,9 @@
     name: '@lassehaslev/executor'
     global: true
 
-- name: put "tdd.sh"
-  template: 'src=tdd.sh dest={{ homedir }}/apps/myapp/tdd.sh'
+- name: put "tdd command"
+  template: 'src=tdd dest={{ homedir }}/apps/myapp/tdd'
 
-- name: chmod "tdd.sh"
-  command: 'chmod 755 {{ homedir }}/apps/myapp/tdd.sh'
+- name: chmod "tdd"
+  command: 'chmod 755 {{ homedir }}/apps/myapp/tdd'
 
