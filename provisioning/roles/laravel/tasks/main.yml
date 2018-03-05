@@ -40,8 +40,8 @@
     no_dev: false
     working_dir: "{{ homedir }}/apps/myapp"
 
-- name: put phpstan.conf
-  template: 'src=phpstan.conf dest={{ homedir }}/apps/myapp/phpstan.conf'
+- name: put phpstan.neon
+  template: 'src=phpstan.neon dest={{ homedir }}/apps/myapp/phpstan.neon'
 
 - name: rewrite .env
   lineinfile:

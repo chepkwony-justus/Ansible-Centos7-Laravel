@@ -3,27 +3,29 @@
 function usage {
     cat <<EOF
     $(basename ${0}) is a tool for phpunit or phpstan (or all) watching executor
-
 Usage:
     $(basename ${0}) phpunit|phpstan|all
-
 Options:
     --help, -h        print this
 EOF
 }
 
+phpunit="./vendor/bin/phpunit" 
+phpstan="./vendor/bin/phpstan analyze -c phpstan.neon -l 1 --no-progress app routes"
+params=" --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'"
+
 case ${1} in
 
     phpunit)
-        executor './vendor/bin/phpunit' --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
+        executor $phpunit $params
     ;;
 
     phpstan)
-        executor './vendor/bin/phpstan analyze -c phpstan.neon -l 4 --no-progress app routes' --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
+        executor $phpstan $params
     ;;
 
     all)
-        executor './vendor/bin/phpunit && ./vendor/bin/phpstan analyze -c phpstan.neon -l 4 --no-progress app routes' --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
+        executor "$phpunit && $phpstan" $params
     ;;
 
     help|--help|-h)
@@ -31,8 +33,6 @@ case ${1} in
     ;;
 
     *)
-        echo "[ERROR] Invalid subcommand '${1}'"
-        usage
-        exit 1
+        executor "$phpunit && $phpstan" $params
     ;;
 esac

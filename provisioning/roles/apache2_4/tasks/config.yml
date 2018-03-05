@@ -22,6 +22,8 @@
       line: 'User vagrant'
     - regexp: 'Group apache'
       line: 'Group vagrant'
+    - regexp: 'EnableSendfile on'
+      line: 'EnableSendfile off'
   when:
     - env == "local"
     - etc_httpd_conf.stat.exists
@@ -46,6 +48,8 @@
       line: 'User vagrant'
     - regexp: 'Group apache'
       line: 'Group vagrant'
+    - regexp: 'EnableSendfile on'
+      line: 'EnableSendfile off'
   when:
     - env == "local"
     - usr_local_apache_conf.stat.exists
