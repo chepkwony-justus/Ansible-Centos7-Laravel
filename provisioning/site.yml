@@ -1,7 +1,8 @@
 ---
 - hosts: vagrants
-  become: true
-  become_user: vagrant
+  become: yes
+  user: vagrant
+  connection: local
   vars:
     env: local
     srcpath: /usr/local/src
