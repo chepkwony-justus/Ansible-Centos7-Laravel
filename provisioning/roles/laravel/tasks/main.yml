@@ -63,7 +63,7 @@
 
 - name: rewrite .env.testing
   lineinfile:
-    dest={{ homedir }}/apps/myapp/.env
+    dest={{ homedir }}/apps/myapp/.env.testing
     state=present
     backrefs=yes
     regexp={{ item.regexp }}

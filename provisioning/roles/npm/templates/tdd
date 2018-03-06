@@ -10,22 +10,20 @@ Options:
 EOF
 }
 
-phpunit="./vendor/bin/phpunit" 
-phpstan="./vendor/bin/phpstan analyze -c phpstan.neon -l 1 --no-progress app routes"
-params=" --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'"
+phpstanLevel=1
 
 case ${1} in
 
     phpunit)
-        executor $phpunit $params
+        executor "vendor/bin/phpunit" --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
     ;;
 
     phpstan)
-        executor $phpstan $params
+        executor "vendor/bin/phpstan analyze -c phpstan.neon -l ${phpstanLevel} --no-progress app routes" --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
     ;;
 
     all)
-        executor "$phpunit && $phpstan" $params
+        executor " vendor/bin/phpunit && vendor/bin/phpstan analyze -c phpstan.neon -l ${phpstanLevel} --no-progress app routes" --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
     ;;
 
     help|--help|-h)
@@ -33,6 +31,6 @@ case ${1} in
     ;;
 
     *)
-        executor "$phpunit && $phpstan" $params
+        executor " vendor/bin/phpunit && vendor/bin/phpstan analyze -c phpstan.neon -l ${phpstanLevel} --no-progress app routes" --watch='**/*.php' --ignore='node_modules/' --ignore='vendor/'
     ;;
 esac
