@@ -76,4 +76,5 @@
   template: 'src=schedule dest={{ homedir }}'
 
 - name: set crontab
+  become: no
   command: 'crontab {{ homedir }}/schedule'
