@@ -63,7 +63,7 @@
 
 - name: rewrite .env.testing
   lineinfile:
-    dest={{ homedir }}/apps/myapp/.env.testing
+    dest={{ homedir }}/apps/myapp/.env
     state=present
     backrefs=yes
     regexp={{ item.regexp }}
@@ -72,3 +72,8 @@
     - regexp: 'DB_DATABASE=localdb'
       line: 'DB_DATABASE=testdb'
 
+- name: put schedule
+  template: 'src=schedule dest={{ homedir }}'
+
+- name: set crontab
+  command: 'crontab {{ homedir }}/schedule'

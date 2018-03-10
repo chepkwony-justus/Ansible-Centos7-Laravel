@@ -8,11 +8,15 @@
 - include: install.yml
   when: check_apache|failed
 
-- name: enable apache
-  service: name=httpd enabled=yes
+- name: httpd auto start
+  service:
+    name: httpd
+    state: started
+    enabled: yes
 
 - include: config.yml
 
 - name: restart apache
   service: name=httpd state=restarted
+
 

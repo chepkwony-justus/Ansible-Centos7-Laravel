@@ -84,6 +84,8 @@
   with_items:
     - db_name: localdb
     - db_name: testdb
-
   ignore_errors: True
+
+- name: migration
+  command: "php {{ homedir }}/apps/myapp/artisan migrate"
 

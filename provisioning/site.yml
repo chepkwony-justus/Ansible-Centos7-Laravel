@@ -37,3 +37,21 @@
     - php7
     - apache2_4
     - ec2
+
+- hosts: ec2-prd
+  become: true
+  user: centos
+  vars:
+    env: development
+    srcpath: /usr/local/src
+    homedir: /home/centos
+    tmp: /tmp
+    mysql_root_passwd: RootPass4Local$
+  tasks:
+    - name: install packages zsh
+      ping:
+  roles:
+    - git
+    - php7
+    - apache2_4
+    - ec2
