@@ -3,3 +3,4 @@ ssh.config
 provisioning/site.retry
 apps
 provisioning/hosts
+Vagrantfile

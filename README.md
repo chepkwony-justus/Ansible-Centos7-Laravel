@@ -5,7 +5,9 @@ https://app.vagrantup.com/centos/boxes/7
 
     vagrant box add https://app.vagrantup.com/centos/boxes/7
 
-    mv ssh.config.example ssh.config && ./provisioning/hosts.example ./provisioning/hosts
+    cp -p ssh.config.example ssh.config
+    cp -p ./provisioning/hosts.example ./provisioning/hosts
+    cp -p Vagrantfile Vagrantfile
 
     vagrant up
 
