@@ -13,6 +13,27 @@
     name: '@lassehaslev/executor'
     global: true
 
+- name: Install "eslint" node.js package.
+  npm:
+    name: 'eslint'
+    global: true
+
+- name: Install "eslint-plugin-vue@next" node.js package.
+  npm:
+    name: 'eslint-plugin-vue@next'
+    global: true
+
+- name: Install "eslint-config-vue" node.js package.
+  npm:
+    name: 'eslint-config-vue'
+    global: true
+
+- name: put "tdd eslintrc"
+  template: 'src=eslintrc.json dest={{ homedir }}/apps/myapp/.eslintrc.json'
+
+- name: put "tdd eslintignore"
+  template: 'src=eslintignore dest={{ homedir }}/apps/myapp/.eslintignore'
+
 - name: put "tdd command"
   template: 'src=tdd dest={{ homedir }}/apps/myapp/tdd'
 
