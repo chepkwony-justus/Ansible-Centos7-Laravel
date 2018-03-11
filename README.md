@@ -7,7 +7,7 @@ https://app.vagrantup.com/centos/boxes/7
 
     cp -p ssh.config.example ssh.config
     cp -p ./provisioning/hosts.example ./provisioning/hosts
-    cp -p Vagrantfile Vagrantfile
+    cp -p Vagrantfile.example Vagrantfile
 
     vagrant up
 
