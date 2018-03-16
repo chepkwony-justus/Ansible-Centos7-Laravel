@@ -39,9 +39,15 @@
     arguments: Weebly/phpstan-laravel
     no_dev: false
     working_dir: "{{ homedir }}/apps/myapp"
+  when: not check_myapp.stat.exists
 
 - name: put phpstan.neon
   template: 'src=phpstan.neon dest={{ homedir }}/apps/myapp/phpstan.neon'
+
+- name: check .env
+  stat:
+    path: "{{ homedir }}/apps/myapp/.env"
+  register: check_env
 
 - name: rewrite .env
   lineinfile:
@@ -57,9 +63,11 @@
       line: 'DB_USERNAME=root'
     - regexp: 'DB_PASSWORD=secret'
       line: 'DB_PASSWORD={{ mysql_root_passwd }}'
+  when: not check_env.stat.exists
 
 - name: create .env.testing
   command: 'cp -p {{ homedir }}/apps/myapp/.env {{ homedir }}/apps/myapp/.env.testing'
+  when: not check_env.stat.exists
 
 - name: rewrite .env.testing
   lineinfile:
@@ -71,6 +79,9 @@
   with_items:
     - regexp: 'DB_DATABASE=localdb'
       line: 'DB_DATABASE=testdb'
+    - regexp: 'DB_PASSWORD=secret'
+      line: 'DB_PASSWORD={{ mysql_root_passwd }}'
+  when: not check_env.stat.exists
 
 - name: put schedule
   template: 'src=schedule dest={{ homedir }}'

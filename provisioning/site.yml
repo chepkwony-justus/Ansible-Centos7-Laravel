@@ -16,6 +16,7 @@
     - git
     - php7
     - apache2_4
+    - phantomjs
     - laravel
     - mysql57
     - npm
