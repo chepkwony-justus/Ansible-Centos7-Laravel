@@ -49,6 +49,14 @@
     path: "{{ homedir }}/apps/myapp/.env"
   register: check_env
 
+- name: create .env
+  command: 'cp -p {{ homedir }}/apps/myapp/.env.example {{ homedir }}/apps/myapp/.env'
+  when: not check_env.stat.exists
+
+- name: key generate
+  command: "php {{ homedir }}/apps/myapp/artisan key:generate"
+  when: not check_env.stat.exists
+
 - name: rewrite .env
   lineinfile:
     dest={{ homedir }}/apps/myapp/.env
